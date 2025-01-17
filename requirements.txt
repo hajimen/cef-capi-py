@@ -1,0 +1,8 @@
+ctypeslib2==2.3.4
+pywin32==308; sys.platform == 'win32'
+mypy
+setuptools
+clang==15.0.7
+pillow
+build
+patch

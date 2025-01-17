@@ -1,0 +1,59 @@
+diff -uprN ctypeslib-orig/__init__.py ctypeslib/__init__.py
+--- ctypeslib-orig/__init__.py	2023-04-22 17:19:22.000000000 +0900
++++ ctypeslib/__init__.py	2025-01-05 13:09:08.919559400 +0900
+@@ -63,13 +63,15 @@ def clang_version():
+     """Pull the clang C library version from the API"""
+     # avoid loading the cindex API (cindex.conf.lib) to avoid version conflicts
+     get_version = cindex.conf.get_cindex_library().clang_getClangVersion
+-    get_version.restype = ctypes.c_char_p
++    # get_version.restype = ctypes.c_char_p
++    get_version.restype = cindex._CXString
++    get_version.errcheck = cindex._CXString.from_result
+     version_string = get_version()
+     version = 'Unknown'
+     if version_string and len(version_string) > 0:
+-        version_groups = re.match(br'.+version ((\d+\.)?(\d+\.)?(\*|\d+))', version_string)
++        version_groups = re.match(r'.+version ((\d+\.)?(\d+\.)?(\*|\d+))', version_string)
+         if version_groups and len(version_groups.groups()) > 0:
+-            version = version_groups.group(1).decode()
++            version = version_groups.group(1)
+     return version
+ 
+ 
+diff -uprN ctypeslib-orig/codegen/clangparser.py ctypeslib/codegen/clangparser.py
+--- ctypeslib-orig/codegen/clangparser.py	2023-04-22 17:36:58.000000000 +0900
++++ ctypeslib/codegen/clangparser.py	2025-01-04 11:04:58.013633300 +0900
+@@ -210,11 +210,12 @@ class Clang_Parser:
+         if name in self.all:
+             if not isinstance(self.all[name], typedesc.Structure) or (self.all[name].members is not None):
+                 # code.interact(local=locals())
+-                raise DuplicateDefinitionException(
+-                    f"register: {name} which has a previous incompatible definition: {obj.name}"
+-                    f"\ndefined here: {obj.location}"
+-                    f"\npreviously defined here: {self.all[name].location}"
+-                )
++                if obj.location != self.all[name].location:
++                    raise DuplicateDefinitionException(
++                        f"register: {name} which has a previous incompatible definition: {obj.name}"
++                        f"\ndefined here: {obj.location}"
++                        f"\npreviously defined here: {self.all[name].location}"
++                    )
+             if isinstance(self.all[name], typedesc.Structure) and (self.all[name].members is None):
+                 return obj
+         log.debug("register: %s ", name)
+
+
+diff -uprN ctypeslib-orig/codegen/codegenerator.py ctypeslib/codegen/codegenerator.py
+--- ctypeslib-orig/codegen/codegenerator.py	2023-04-22 17:39:06.000000000 +0900
++++ ctypeslib/codegen/codegenerator.py	2025-01-16 11:22:50.389452700 +0900
+@@ -797,8 +797,8 @@ class Generator:
+         else:
+             global_flag = ""
+         if library._name not in self._c_libraries:
+-            print("_libraries[%r] =%s ctypes.CDLL(%r%s)" % (library._name, stub_comment, library._filepath, global_flag),
+-                  file=self.imports)
++            # print("_libraries[%r] =%s ctypes.CDLL(%r%s)" % (library._name, stub_comment, library._filepath, global_flag),
++            #       file=self.imports)
+             self._c_libraries[library._name] = None
+         return "_libraries[%r]" % library._name
+ 

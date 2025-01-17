@@ -1,0 +1,5 @@
+export PATH="/opt/homebrew/opt/llvm@15/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/llvm@15/lib"
+export LD_LIBRARY_PATH="/opt/homebrew/opt/llvm@15/lib"
+export CLANG_LIBRARY_PATH="/opt/homebrew/opt/llvm@15/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm@15/include"

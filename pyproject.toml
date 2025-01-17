@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=60"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cef-capi-py"
+dynamic = ["version"]
+description = "Chromium Embedded Framework (CEF) C API wrapper for Python without C extension, with ctypes"
+requires-python = ">=3.11"
+authors = [{ name = "NAKAZATO Hajime", email = "hajime@kaoriha.org" }]
+readme = "ReadMe.md"
+license = {file = "LICENSE"}
+keywords = ["CEF", "Chromium Embedded Framework", "ctypes"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+repository = "https://github.com/hajimen/cef-capi-py.git"
+
+[tool.setuptools.dynamic]
+version = {attr = "cef_capi.__version__"}
+
+[tool.setuptools.package-dir]
+"cef_capi.runtime" = "cef_binary/client/Release"
+"cef_capi.smoke_test_webpage" = "cef_capi/smoke_test_webpage"
+"cef_capi" = "cef_capi"
+
+[tool.setuptools.package-data]
+"cef_capi.runtime" = ["**"]
+"cef_capi.smoke_test_webpage" = ["**"]
