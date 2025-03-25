@@ -169,7 +169,7 @@ Note the possibility of memory leaks. Python and CEF memory management style mis
 
 ## Integrating to your product
 
-Use wheel. It contains CEF runtime, of course.
+Use wheel. It contains CEF runtime, of course. You can find it in [PyPI](https://pypi.org/project/cef-capi-py/).
 
 The version of wheel is CEF runtime's.
 
