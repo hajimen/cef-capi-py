@@ -56,7 +56,9 @@ First of all, `git clone` this repository, and set up venv or something.
 
 Run `pip install -r requirements.txt` in repo root.
 
-Extract tar.bz2 file of [CEF Automated Builds](https://cef-builds.spotifycdn.com/index.html)
+You should grab the corresponding version of CEF tar.bz2 file from [CEF Automated Builds](https://cef-builds.spotifycdn.com/index.html).
+Enter the version number of the cef-capi-py (131.3.5, for example) into "Version Filer" and press "Apply" button.
+You will find them. Download **Sample Application** and **Minimal Distribution** tar.bz2 files and extract them
 to `cef_binary/client` and `cef_binary/minimal`.
 If you are just going to learn the behavior of cef-capi-py, leave `cef_binary/minimal` untouched.
 See the `ReadMe.md` files of each directory.
@@ -124,7 +126,7 @@ CEF C API uses C-style OOP. `@handler()` decorator is for member function overri
 `@handler()` gets the decorated function's name and uses the name as member function's name.
 Very odd usage but good for simplicity.
 
-`@handler()` decorator has four odd features. Look at `cef_capi/__init__.py` until
+`@handler()` decorator has four odd feat.ures. Look at `cef_capi/__init__.py` until
 you get the meaning of them:
 
 - **Auto dereferencing** of `ctypes._Pointer` instances of args
