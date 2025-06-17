@@ -43,6 +43,7 @@ Every non-essential thing is abandoned.
 - No frequent update: I will not update cef-capi-py while it works. I predict that someday OSes can block old CEF, someday Python can break some ctypes features. Except such cases, I will not update cef-capi-py.
 - No optimization: Optimization makes codebase unmaintainable.
 - Single process mode for V8 extension (JavaScript interaction): CEF usually creates **render process** as subprocess. V8 extension code should be written in render process, but it is extremely hard for Python. I just go with single process mode.
+- On macOS, Homebrew python is required. I have failed to manage to do with python.org pkg python.
 
 ## Set up to learn / build
 
@@ -80,6 +81,8 @@ Run `export LD_PRELOAD=/{somewhere}/libcef.so` before running CEF.
 It comes from a bug of CEF Automated Builds: [Dynamic loading of libcef.so on Linux ARM64 not possible anymore due to TLS size increase](https://github.com/chromiumembedded/cef/issues/3803).
 
 ### macOS
+
+Use Homebrew's python.
 
 Run `xattr -cr cef_binary` in repo root. Ignore permission error.
 
