@@ -1,0 +1,11 @@
+Release
+*.txt
+bazel
+.bazel*
+cmake
+Debug
+include
+libcef_dll
+Resources
+*.bazel
+WORKSPACE

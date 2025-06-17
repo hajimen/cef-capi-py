@@ -147,5 +147,4 @@ blob_storage
 
 runtime
 venv*
-cef_binary
 screenshot.png
